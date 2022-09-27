@@ -1,0 +1,14 @@
+services:
+    webapp:
+    container_name: "<project_name>"
+    build:
+        context: .
+        dockerfile: dockerfile
+
+        volumes:
+            - ./services/webapp:/var/www:rw
+
+        ports:
+            - 80:80
+    
+        restart: always
