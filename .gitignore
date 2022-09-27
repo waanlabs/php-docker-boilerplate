@@ -1,3 +1,15 @@
-# 
-.idea
-.vscode
+#--------------------------------------------------------------------
+# Git Ignore file
+#--------------------------------------------------------------------
+
+# Logs
+logs/*
+*.log
+
+# OS files & folders
+.DS_Store
+
+# IDE files & folders
+.idea/
+.vscode/
+.run
