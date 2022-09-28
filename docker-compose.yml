@@ -5,9 +5,6 @@ services:
         context: .
         dockerfile: dockerfile
 
-        volumes:
-            - ./services/webapp:/var/www:rw
-
         ports:
             - 80:80
     

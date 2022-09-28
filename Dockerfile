@@ -43,6 +43,7 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
 # Comment out the following line if you want to use composer volumes.
 # Using composer volumes is recommeded for development environment.
+# But always ADD the source folders to container in production (security).
 # 
 # Ex-
 # volumes:
