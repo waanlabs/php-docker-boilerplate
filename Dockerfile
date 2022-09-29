@@ -4,7 +4,7 @@ LABEL version=1.0.0
 
 ARG PASSWD
 
-# Creating a sudo user is recommended.
+# Creating a sudo user is not a must, but recommended.
 RUN apt update && \
     apt install -y sudo
 
