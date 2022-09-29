@@ -2,7 +2,11 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
+<<<<<<< HEAD
 # Creating a sudo user is recommended.
+=======
+# Creating a sudo user is not a must, but recommended.
+>>>>>>> 3d9cdd9 (Update: Dockerfile.)
 RUN apt update && \
     apt install -y sudo
 
