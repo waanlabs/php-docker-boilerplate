@@ -1,12 +1,19 @@
 FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
+LABEL version=1.0.0
 
-RUN apt update \
- && apt install -y sudo
+# Creating a sudo user is recommended.
+RUN apt update && \
+    apt install -y sudo
 
-RUN adduser --disabled-password --gecos '' waan
-RUN adduser waan sudo
-RUN echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# Change user(waan) to your prefereance.
+# --gecos is used to set an empty password.
+#
+# Ex -
+# --gecos "123" will set password as 123
+RUN adduser --disabled-password --gecos "" waan && \
+    adduser waan sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 
 RUN apt install -y tzdata && \
     echo "America/New_York" > /etc/timezone && \
@@ -35,7 +42,17 @@ ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
-ADD services/webapp /var/www
+# Comment out the following line if you want to use composer volumes.
+# Using composer volumes is recommeded for development environment.
+# ADD source folder to container is recommeded for production.
+#
+# Ex-
+# volumes:
+#   - ./services/webapp:/var/www:rw
+#
+# in docker-compose.yml
+#ADD services/webapp /var/www
+
 RUN sudo chown www-data:www-data -R /var/www/
 
 WORKDIR /var/www
@@ -49,4 +66,6 @@ RUN sudo chmod +x /start.sh
 
 EXPOSE 80
 
+# Entrypoint of the application is set to start.sh
+# You can include additional commands to start.sh using bash scripting.
 CMD ["sudo","/start.sh"]
