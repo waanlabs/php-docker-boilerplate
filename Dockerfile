@@ -5,11 +5,9 @@ LABEL version=1.0.0
 <<<<<<< HEAD
 # Creating a sudo user is recommended.
 =======
-# Creating a sudo user is not a must, but recommended.
+# Creating a sudo user is recommended.
 >>>>>>> 3d9cdd9 (Update: Dockerfile.)
-RUN apt update && \
-    apt install -y sudo
-
+RUN apt update && 
 # Change user(waan) to your prefereance.
 # 
 # echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -72,45 +70,28 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
 # Comment out the following line if you want to use composer volumes.
 # Using composer volumes is recommeded for development environment.
-# 
->>>>>>> 4c04db4 (Update:Fix #1)
+# ADD source folder to container is recommeded for production.
+#
 # Ex-
 # volumes:
 #   - ./services/webapp:/var/www:rw
 #
 # in docker-compose.yml
-<<<<<<< HEAD
-# ADD services/webapp /var/www
-
-RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
-
-WORKDIR /var/www
-RUN echo ${PASSWD} | sudo -S rm -rf html/
-=======
-ADD services/webapp /var/www
+#ADD services/webapp /var/www
 
 RUN sudo chown www-data:www-data -R /var/www/
 
 WORKDIR /var/www
 RUN sudo rm -rf html/
->>>>>>> 4c04db4 (Update:Fix #1)
 
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
     sudo composer install
 
 ADD runtime/start.sh /
-<<<<<<< HEAD
-RUN echo ${PASSWD} | sudo -S chmod +x /start.sh
-=======
 RUN sudo chmod +x /start.sh
->>>>>>> 4c04db4 (Update:Fix #1)
 
 EXPOSE 80
 
 # Entrypoint of the application is set to start.sh
 # You can include additional commands to start.sh using bash scripting.
-<<<<<<< HEAD
-CMD ["/start.sh"]
-=======
 CMD ["sudo","/start.sh"]
->>>>>>> 4c04db4 (Update:Fix #1)
