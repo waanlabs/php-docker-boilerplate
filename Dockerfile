@@ -2,6 +2,7 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
+# Creating a sudo user is not a must, but recommended.
 RUN apt update && \
     apt install -y sudo
 
