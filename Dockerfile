@@ -2,13 +2,7 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
-<<<<<<< HEAD
-ARG PASSWD
-
-# Creating a sudo user is not a must, but recommended.
-=======
 # Creating a sudo user is recommended.
->>>>>>> 6df368f (Update: Dockerfile.)
 RUN apt update && \
     apt install -y sudo
 
@@ -53,13 +47,8 @@ ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
-<<<<<<< HEAD
-# Comment out the following line if you want to use compose volumes.
-# Using compose volumes is recommeded for development environment.
-=======
 # Comment out the following line if you want to use composer volumes.
 # Using composer volumes is recommeded for development environment.
->>>>>>> 6df368f (Update: Dockerfile.)
 # ADD source folder to container is recommeded for production.
 #
 # Ex-
@@ -67,11 +56,7 @@ RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/
 #   - ./services/webapp:/var/www:rw
 #
 # in docker-compose.yml
-<<<<<<< HEAD
 # ADD services/webapp /var/www
-=======
-#ADD services/webapp /var/www
->>>>>>> 6df368f (Update: Dockerfile.)
 
 RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
 
