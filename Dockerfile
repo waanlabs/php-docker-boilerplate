@@ -51,7 +51,7 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 #   - ./services/webapp:/var/www:rw
 #
 # in docker-compose.yml
-#ADD services/webapp /var/www
+# ADD services/webapp /var/www
 
 RUN sudo chown www-data:www-data -R /var/www/
 
