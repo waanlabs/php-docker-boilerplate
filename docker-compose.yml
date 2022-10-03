@@ -1,14 +1,18 @@
+version: "3.8"
+
 services:
     webapp:
-    container_name: ""
-    build:
-        context: .
-        dockerfile: dockerfile
+        container_name: "webapp"
 
-        volumes:
+        build: 
+            context: .
+            dockerfile: Dockerfile
+
+        volumes: 
             - ./services/webapp:/var/www:rw
 
-        ports:
+        ports:  
             - 80:80
     
         restart: always
+        
