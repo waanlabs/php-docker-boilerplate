@@ -63,8 +63,8 @@ RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
 WORKDIR /var/www
 RUN echo ${PASSWD} | sudo -S rm -rf html/
 
-# RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
-# sudo composer install
+# #RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
+## sudo composer install
 
 ADD runtime/start.sh /
 RUN echo ${PASSWD} | sudo -S chmod +x /start.sh
