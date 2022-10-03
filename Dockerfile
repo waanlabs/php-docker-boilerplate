@@ -11,6 +11,13 @@ RUN apt update && \
 #
 # Ex -
 # --gecos "123" will set password as 123
+# 
+# echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# will allow sudo without password.
+#
+# To add a sudo user with password, use the following command.
+# RUN adduser --gecos "123" waan && \
+#     adduser waan sudo
 RUN adduser --disabled-password --gecos "" waan && \
     adduser waan sudo && \
     echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
@@ -42,8 +49,8 @@ ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
-# Comment out the following line if you want to use composer volumes.
-# Using composer volumes is recommeded for development environment.
+# Comment out the following line if you want to use compose volumes.
+# Using compose volumes is recommeded for development environment.
 # ADD source folder to container is recommeded for production.
 #
 # Ex-
