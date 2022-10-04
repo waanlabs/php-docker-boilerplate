@@ -80,8 +80,8 @@ RUN sudo chown www-data:www-data -R /var/www/
 WORKDIR /var/www
 RUN sudo rm -rf html/
 
-RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
-    sudo composer install
+#RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
+#    sudo composer install
 
 ADD runtime/start.sh /
 RUN sudo chmod +x /start.sh
