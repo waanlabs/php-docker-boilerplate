@@ -2,11 +2,7 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
-<<<<<<< HEAD
 # Creating a sudo user is recommended.
-=======
-# Creating a sudo user is recommended.
->>>>>>> 3d9cdd9 (Update: Dockerfile.)
 RUN apt update && 
 # Change user(waan) to your prefereance.
 # 
@@ -77,7 +73,7 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 #   - ./services/webapp:/var/www:rw
 #
 # in docker-compose.yml
-#ADD services/webapp /var/www
+# ADD services/webapp /var/www
 
 RUN sudo chown www-data:www-data -R /var/www/
 

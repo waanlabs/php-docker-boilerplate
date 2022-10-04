@@ -2,7 +2,14 @@ version: "3.8"
 
 services:
     webapp:
+<<<<<<< HEAD
         container_name: "webapp"
+=======
+    container_name: ""
+    build:
+        context: .
+        dockerfile: dockerfile
+>>>>>>> e530aa4 (Update)
 
         build: 
             context: .
