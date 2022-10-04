@@ -45,13 +45,7 @@ RUN echo ${PASSWD} | sudo -S a2enmod php8.1
 
 ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-<<<<<<< HEAD
 RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
-=======
-RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
-RUN sudo sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf"
-RUN sudo sh -c "echo 'ServerTokens Prod' >> /etc/apache2/apache2.conf"
->>>>>>> 7e18833 (Code Cleanup (#7))
 
 # Comment out the following line if you want to use composer volumes.
 # Using composer volumes is recommeded for development environment.
@@ -69,8 +63,8 @@ RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
 WORKDIR /var/www
 RUN echo ${PASSWD} | sudo -S rm -rf html/
 
-# #RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
-## sudo composer install
+RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
+    sudo composer install
 
 ADD runtime/start.sh /
 RUN echo ${PASSWD} | sudo -S chmod +x /start.sh
