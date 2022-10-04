@@ -1,3 +1,3 @@
 #!/usr/bin/sh
 
-/usr/sbin/apachectl -D FOREGROUND
+echo ${PASSWD} | sudo -S /usr/sbin/apachectl -D FOREGROUND

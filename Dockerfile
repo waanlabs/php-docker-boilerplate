@@ -3,17 +3,20 @@ LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
 # Creating a sudo user is recommended.
-RUN apt update && \
-    apt install -y sudo
-
+RUN apt update && 
 # Change user(waan) to your prefereance.
-# --gecos is used to set an empty password.
+# 
+# echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+# will allow sudo without password.
 #
-# Ex -
-# --gecos "123" will set password as 123
+# RUN adduser --disabled-password --gecos "" waan && \
+#    adduser waan sudo && \
+#    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+#
+# To add a sudo user with password, use the following command.
 RUN adduser --disabled-password --gecos "" waan && \
-    adduser waan sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+    usermod -aG sudo waan && \
+    echo  "waan:${PASSWD}" | sudo -S chpasswd 
 
 RUN apt install -y tzdata && \
     echo "America/New_York" > /etc/timezone && \
@@ -21,11 +24,11 @@ RUN apt install -y tzdata && \
 
 USER waan
 
-RUN sudo apt install -y software-properties-common && \
-    sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
-    sudo apt update
+RUN echo ${PASSWD} | sudo -S apt install -y software-properties-common && \
+    echo ${PASSWD} | sudo -S LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
+    echo ${PASSWD} | sudo -S apt update
 
-RUN sudo apt install -y \
+RUN echo ${PASSWD} | sudo -S apt install -y \
     php8.1 \
     php8.1-xml \
     php8.1-curl \
@@ -35,6 +38,25 @@ RUN sudo apt install -y \
     apache2 \
     curl
 
+<<<<<<< HEAD
+RUN echo ${PASSWD} | sudo -S a2enmod rewrite
+RUN echo ${PASSWD} | sudo -S a2enmod php8.1
+
+ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+<<<<<<< HEAD:dev/Dockerfile
+RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+RUN sudo sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf"
+RUN sudo sh -c "echo 'ServerTokens Prod' >> /etc/apache2/apache2.conf"
+=======
+RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+>>>>>>> 9a926e5 (Update):Dockerfile
+
+# Comment out the following line if you want to use composer volumes.
+# Using composer volumes is recommeded for development environment.
+# ADD source folder to container is recommeded for production.
+#
+=======
 RUN sudo a2enmod rewrite
 RUN sudo a2enmod php8.1
 
