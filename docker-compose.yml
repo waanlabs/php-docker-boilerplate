@@ -2,14 +2,7 @@ version: "3.8"
 
 services:
     webapp:
-<<<<<<< HEAD
-    container_name: "webapp"
-    build:
-        context: .
-        dockerfile: dockerfile
-=======
         container_name: "webapp"
->>>>>>> e197897 (Update: Runtime test.)
 
         build: 
             context: .
