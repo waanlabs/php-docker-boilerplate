@@ -41,6 +41,8 @@ RUN sudo a2enmod php8.1
 ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+RUN sudo sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf"
+RUN sudo sh -c "echo 'ServerTokens Prod' >> /etc/apache2/apache2.conf"
 
 # Comment out the following line if you want to use composer volumes.
 # Using composer volumes is recommeded for development environment.
