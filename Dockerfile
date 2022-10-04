@@ -2,11 +2,15 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
+<<<<<<< HEAD
 # Creating a sudo user is recommended.
+=======
+>>>>>>> 4c04db4 (Update:Fix #1)
 RUN apt update && \
     apt install -y sudo
 
 # Change user(waan) to your prefereance.
+<<<<<<< HEAD
 # 
 # echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # will allow sudo without password.
@@ -19,6 +23,15 @@ RUN apt update && \
 RUN adduser --disabled-password --gecos "" waan && \
     usermod -aG sudo waan && \
     echo  "waan:${PASSWD}" | sudo -S chpasswd 
+=======
+# --gecos is used to set an empty password.
+#
+# Ex -
+# --gecos "123" will set password as 123
+RUN adduser --disabled-password --gecos "" waan && \
+    adduser waan sudo && \
+    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+>>>>>>> 4c04db4 (Update:Fix #1)
 
 RUN apt install -y tzdata && \
     echo "America/New_York" > /etc/timezone && \
@@ -26,11 +39,19 @@ RUN apt install -y tzdata && \
 
 USER waan
 
+<<<<<<< HEAD
 RUN echo ${PASSWD} | sudo -S apt install -y software-properties-common && \
     echo ${PASSWD} | sudo -S LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
     echo ${PASSWD} | sudo -S apt update
 
 RUN echo ${PASSWD} | sudo -S apt install -y \
+=======
+RUN sudo apt install -y software-properties-common && \
+    sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
+    sudo apt update
+
+RUN sudo apt install -y \
+>>>>>>> 4c04db4 (Update:Fix #1)
     php8.1 \
     php8.1-xml \
     php8.1-curl \
@@ -40,6 +61,7 @@ RUN echo ${PASSWD} | sudo -S apt install -y \
     apache2 \
     curl
 
+<<<<<<< HEAD
 RUN echo ${PASSWD} | sudo -S a2enmod rewrite
 RUN echo ${PASSWD} | sudo -S a2enmod php8.1
 
@@ -57,26 +79,55 @@ RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/
 # Using composer volumes is recommeded for development environment.
 # ADD source folder to container is recommeded for production.
 #
+=======
+RUN sudo a2enmod rewrite
+RUN sudo a2enmod php8.1
+
+ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
+
+RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+
+# Comment out the following line if you want to use composer volumes.
+# Using composer volumes is recommeded for development environment.
+# 
+>>>>>>> 4c04db4 (Update:Fix #1)
 # Ex-
 # volumes:
 #   - ./services/webapp:/var/www:rw
 #
 # in docker-compose.yml
+<<<<<<< HEAD
 # ADD services/webapp /var/www
 
 RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
 
 WORKDIR /var/www
 RUN echo ${PASSWD} | sudo -S rm -rf html/
+=======
+ADD services/webapp /var/www
+
+RUN sudo chown www-data:www-data -R /var/www/
+
+WORKDIR /var/www
+RUN sudo rm -rf html/
+>>>>>>> 4c04db4 (Update:Fix #1)
 
 RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
     sudo composer install
 
 ADD runtime/start.sh /
+<<<<<<< HEAD
 RUN echo ${PASSWD} | sudo -S chmod +x /start.sh
+=======
+RUN sudo chmod +x /start.sh
+>>>>>>> 4c04db4 (Update:Fix #1)
 
 EXPOSE 80
 
 # Entrypoint of the application is set to start.sh
 # You can include additional commands to start.sh using bash scripting.
+<<<<<<< HEAD
 CMD ["/start.sh"]
+=======
+CMD ["sudo","/start.sh"]
+>>>>>>> 4c04db4 (Update:Fix #1)
