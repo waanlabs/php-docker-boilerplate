@@ -7,6 +7,11 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile
+            args:
+                PASSWD: ${PASSWD}
+        
+        env_file:
+            - .env
 
         volumes: 
             - ./services/webapp:/var/www:rw

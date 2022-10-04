@@ -2,25 +2,25 @@ FROM ubuntu:latest
 LABEL author=Waan<admin@waan.email>
 LABEL version=1.0.0
 
+ARG PASSWD
+
 # Creating a sudo user is recommended.
 RUN apt update && \
     apt install -y sudo
 
 # Change user(waan) to your prefereance.
-# --gecos is used to set an empty password.
-#
-# Ex -
-# --gecos "123" will set password as 123
 # 
 # echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
 # will allow sudo without password.
 #
+# RUN adduser --disabled-password --gecos "" waan && \
+#    adduser waan sudo && \
+#    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+#
 # To add a sudo user with password, use the following command.
-# RUN adduser --gecos "123" waan && \
-#     adduser waan sudo
 RUN adduser --disabled-password --gecos "" waan && \
-    adduser waan sudo && \
-    echo '%sudo ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+    usermod -aG sudo waan && \
+    echo  "waan:${PASSWD}" | sudo -S chpasswd 
 
 RUN apt install -y tzdata && \
     echo "America/New_York" > /etc/timezone && \
@@ -28,11 +28,11 @@ RUN apt install -y tzdata && \
 
 USER waan
 
-RUN sudo apt install -y software-properties-common && \
-    sudo LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
-    sudo apt update
+RUN echo ${PASSWD} | sudo -S apt install -y software-properties-common && \
+    echo ${PASSWD} | sudo -S LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php && \
+    echo ${PASSWD} | sudo -S apt update
 
-RUN sudo apt install -y \
+RUN echo ${PASSWD} | sudo -S apt install -y \
     php8.1 \
     php8.1-xml \
     php8.1-curl \
@@ -42,12 +42,12 @@ RUN sudo apt install -y \
     apache2 \
     curl
 
-RUN sudo a2enmod rewrite
-RUN sudo a2enmod php8.1
+RUN echo ${PASSWD} | sudo -S a2enmod rewrite
+RUN echo ${PASSWD} | sudo -S a2enmod php8.1
 
 ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
-RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
+RUN echo ${PASSWD} | sudo -S sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 
 # Comment out the following line if you want to use compose volumes.
 # Using compose volumes is recommeded for development environment.
@@ -60,19 +60,19 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf"
 # in docker-compose.yml
 # ADD services/webapp /var/www
 
-RUN sudo chown www-data:www-data -R /var/www/
+RUN echo ${PASSWD} | sudo -S chown www-data:www-data -R /var/www/
 
 WORKDIR /var/www
-RUN sudo rm -rf html/
+RUN echo ${PASSWD} | sudo -S rm -rf html/
 
 #RUN curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer && \
 #    sudo composer install
 
 ADD runtime/start.sh /
-RUN sudo chmod +x /start.sh
+RUN echo ${PASSWD} | sudo -S chmod +x /start.sh
 
 EXPOSE 80
 
 # Entrypoint of the application is set to start.sh
 # You can include additional commands to start.sh using bash scripting.
-CMD ["sudo","/start.sh"]
+CMD ["/start.sh"]
