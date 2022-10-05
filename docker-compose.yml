@@ -7,11 +7,6 @@ services:
         build: 
             context: .
             dockerfile: Dockerfile
-            args:
-                sudo_passwd: ${SUDO_PASSWD}
-        
-        env_file:
-            - .env
 
         volumes: 
             - ./services/webapp:/var/www:rw
