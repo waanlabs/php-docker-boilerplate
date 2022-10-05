@@ -37,8 +37,8 @@ RUN sudo a2enmod php8.1
 ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf" && \
-        sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf" && \
-        sh -c "echo 'ServerTokens Prod' >> /etc/apache2/apache2.conf"
+    sudo sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf" && \
+    sudo sh -c "echo 'ServerTokens Prod' >> /etc/apache2/apache2.conf"
 
 # Use of compose volumes is recommeded for development environment.
 # ADD source folder to container is recommeded for production.
@@ -52,16 +52,18 @@ RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf" && \
 
 RUN sudo chown www-data:www-data -R /var/www/
 
+# Set working directory
 WORKDIR /var/www
 
 # Delete /var/www/html.
 RUN sudo rm -rf html/
 
-# Composer download, setup and install.
+# Composer download and setup, but can not install since all the files are added after 
+# the container is created using docker compose volumes.
+# Ref - start-scripts.sh for more details.
 RUN sudo php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" && \
     sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer && \
-    sudo php -r "unlink('composer-setup.php');" && \
-    sudo composer install
+    sudo php -r "unlink('composer-setup.php');"
 
 ADD runtime/start-script.sh /
 RUN sudo chmod +x /start-script.sh

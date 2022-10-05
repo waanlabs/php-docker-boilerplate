@@ -1,4 +1,6 @@
-#!/usr/bin/sh
+#!/usr/bin/bash
+sudo /usr/sbin/apachectl -D FOREGROUND
 
-echo ${SUDO_PASSWD} | sudo -S /usr/sbin/apachectl -D FOREGROUND
-echo ${SUDO_PASSWD} | sudo -S composer install
+# Use sudo composer install in start-script.sh (no output),
+# or docker exec -it webapp /bin/bash -c "cd /var/www && composer install" (output) 
+# after the build.

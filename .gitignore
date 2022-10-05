@@ -13,3 +13,7 @@ logs/*
 .idea/
 .vscode/
 .run
+
+# Composer files & folders
+vendor/
+composer.lock
