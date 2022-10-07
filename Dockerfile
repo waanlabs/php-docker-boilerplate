@@ -4,7 +4,7 @@ LABEL version=1.0.0
 
 RUN apt update && \
     apt install -y sudo
-
+    
 # Create a sudo user without a password.
 RUN adduser --disabled-password --gecos "" waan && \
     usermod -aG sudo waan && \ 
@@ -34,7 +34,7 @@ RUN sudo apt install -y \
 RUN sudo a2enmod rewrite
 RUN sudo a2enmod php8.1
 
-ADD runtime/apache-config.conf /etc/apache2/sites-available/000-default.conf
+ADD runtime/apache/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
 RUN sudo sh -c "echo 'ServerName localhost' >> /etc/apache2/apache2.conf" && \
     sudo sh -c "echo 'ServerSignature Off' >> /etc/apache2/apache2.conf" && \
