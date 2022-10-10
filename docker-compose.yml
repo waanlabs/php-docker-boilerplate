@@ -1,6 +1,6 @@
 services:
     webapp:
-    container_name: "<project_name>"
+    container_name: "webapp"
     build:
         context: .
         dockerfile: dockerfile
