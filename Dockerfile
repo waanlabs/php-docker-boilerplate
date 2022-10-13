@@ -31,8 +31,8 @@ RUN sudo apt install -y \
     apache2 \
     curl
 
-RUN sudo a2enmod rewrite
-RUN sudo a2enmod php8.1
+RUN sudo a2enmod rewrite \
+    php8.1
 
 ADD runtime/apache/apache-config.conf /etc/apache2/sites-available/000-default.conf
 
